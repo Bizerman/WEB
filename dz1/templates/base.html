@@ -11,17 +11,17 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand ms-5 fs-2" href="#">AskInfo</a>
+        <a class="navbar-brand ms-5 fs-2" href="{% url 'list_page_url' %}">AskInfo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
           <form class="d-flex" role="search">
                 <input class="form-control me-3 col-6" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success" style="margin-left: 160%">Ask</button>
           </form>
         </div>
-        <div class="user-block me-3 d-flex flex-row">
+        <div class="user-block me-3 d-flex flex-row align-items-center">
+            <a class="btn btn-success me-5" href="{% url 'ask_page_url' %}" style="height: 38px" >ASK!</a>
             <img src="https://www.kindpng.com/picc/m/173-1731325_person-icon-png-transparent-png.png" alt="none" class="user-img">
             <div class="user-profile d-flex flex-column">
                 <p class="user-profile-name mt-2">Dr.Pepper</p>
@@ -35,10 +35,10 @@
     </nav>
     <main class="container mt-3">
         <div class="row">
-            <div class="col">
+            <div class="col me-5" >
                 {% block content %}{% endblock %}
             </div>
-            <div class="col-2">
+            <div class="col-2 ms-3">
                 <div class="right-column-blocks d-flex flex-column align-content-end">
                     <h2 class="tags-name">Popular Tags</h2>
                     <div class="tags d-flex flex-row gap-2 flex-wrap mb-5">

@@ -19,5 +19,7 @@ from django.urls import path
 from dz1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.render_main_page, name='main_url')
+    path('', views.render_questions_list_page, name='list_page_url'),
+    path('new_question/', views.render_ask_page, name='ask_page_url'),
+    path('question/', views.render_question_page, name='question_page_url'),
 ]
