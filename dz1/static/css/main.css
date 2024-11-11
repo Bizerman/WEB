@@ -1,0 +1,32 @@
+.navbar-collapse{
+    flex-grow: 0 !important;
+}
+.user-img{
+    width: 100px;
+    height: auto;
+}
+.user-profile{
+
+}
+.user-profile-name{
+
+}
+.user-profile-btns{
+
+}
+.user-profile-setting{
+
+}
+.user-profile-logout{
+
+}
+.right-column-blocks{
+    margin-top: 60px;
+}
+.btn{
+    width:auto;
+    height: auto;
+}
+.tags{
+    max-width: max-content;
+}
