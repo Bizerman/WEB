@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="d-flex flex-column gap-3">
+        <header>
+            <h1 >Registration</h1>
+        </header>
+        <p style="color: #bd0000">Sorry, this email address is already registered!</p>
+        <form>
+            <div class="row">
+                <div class="d-flex flex-column col-2 gap-3">
+                    <label for="InputLogin" class="form-label">Login</label>
+                    <label for="InputEmail" class="form-label">Email</label>
+                    <label for="InputNickName" class="form-label">NickName</label>
+                    <label for="InputPassword" class="form-label">Password</label>
+                    <label for="InputRepeatPassword" class="form-label">Repeat password</label>
+                    <label for="UploadAvatar" class="form-label">Upload avatar</label>
+                </div>
+                <div class="d-flex flex-column col gap-2" >
+                    <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputLogin">
+                    <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputEmail">
+                    <input type="email" class="form-control" maxlength="32" style="width: 50%" id="InputNickName">
+                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputPassword">
+                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputRepeatPassword">
+                    <input class="form-control" type="file" style="width: 50%" id="formFile">
+                    <div class="d-flex flex-column gap-4 mt-4">
+                        <button type="submit" class="btn btn-dark" style="width: 15%">Registered!</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

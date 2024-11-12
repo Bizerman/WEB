@@ -22,4 +22,7 @@ urlpatterns = [
     path('', views.render_questions_list_page, name='list_page_url'),
     path('new_question/', views.render_ask_page, name='ask_page_url'),
     path('question/', views.render_question_page, name='question_page_url'),
+    path('login/',views.render_login_page,name='login_page_url'),
+    path('logout/',views.logout,name='logout_url'),
+    path('signup/',views.render_signup_page,name='signup_page_url'),
 ]
