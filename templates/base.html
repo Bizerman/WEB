@@ -50,16 +50,11 @@
             <div class="col-2 ms-3">
                 <div class="right-column-blocks d-flex flex-column align-content-end">
                     <h2 class="tags-name">Popular Tags</h2>
-                    <div class="tags d-flex flex-row gap-2 flex-wrap mb-5">
-                        <button type="button" class="btn btn-sm btn-primary">Primary</button>
-                        <button type="button" class="btn btn-sm btn-secondary">Secondary</button>
-                        <button type="button" class="btn btn-sm btn-success">Success</button>
-                        <button type="button" class="btn btn-sm btn-danger">Danger</button>
-                        <button type="button" class="btn btn-sm btn-warning">Warning</button>
-                        <button type="button" class="btn btn-sm btn-info">Info</button>
-                        <button type="button" class="btn btn-sm btn-light">Light</button>
-                        <button type="button" class="btn btn-sm btn-dark">Dark</button>
-                    </div>
+                        <div class="tags d-flex flex-row gap-2 flex-wrap mb-5">
+                            {% for tag in tags %}
+                                <a href="{% url 'list_tag_url' tag.name %}" type="button" class="btn btn-sm {{ tag.theme }}">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
                     <h2 class="tags-name">Best members</h2>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="#">Member</a></li>
