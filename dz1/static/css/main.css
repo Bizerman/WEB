@@ -3,7 +3,8 @@
 }
 .user-img{
     width: 100px;
-    height: auto;
+    height: 100px;
+    object-fit: cover;
 }
 .user-profile{
 
