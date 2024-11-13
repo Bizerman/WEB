@@ -22,12 +22,12 @@
         </div>
         <div class="user-block me-3 d-flex flex-row align-items-center">
             <a class="btn btn-success me-5" href="{% url 'ask_page_url' %}" style="height: 38px" >ASK!</a>
-            {% if auth == True %}
+            {% if auth %}
             	<img src="https://avatars.yandex.net/get-music-content/5457712/47dd157a.a.18530035-1/m1000x1000?webp=false" alt="none" class="user-img me-2" >
                 <div class="user-profile d-flex flex-column">
-                    <p class="user-profile-name mt-2">Dr.Pepper</p>
+                    <p class="user-profile-name mt-2">{{ auth }}</p>
                     <div class="user-profile-btns d-flex flex-row">
-                        <a class="user-profile-setting me-3" href="#">settings</a>
+                        <a class="user-profile-setting me-3" href="{% url 'settings_page_url' %}">settings</a>
                         <form method="post">
                             <a class="user-profile-logout" href="{% url 'logout_url' %}">log out</a>
                         </form>
