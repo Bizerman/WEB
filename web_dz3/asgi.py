@@ -1,5 +1,5 @@
 """
-ASGI config for web_dz33 project.
+ASGI config for web_dz3 project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
