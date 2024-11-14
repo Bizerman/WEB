@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.utils.crypto import get_random_string
 from dz3.models import Profile, Question, Answer, Tag, QuestionLike,AnswerLike  # Импортируйте ваши модели
@@ -11,7 +12,7 @@ class Command(BaseCommand):
         ratio = kwargs['ratio']
 
         users = [
-            Profile(username=get_random_string(8),
+            Profile(user=random.choice(User.objects.all()),
                     email=f'user{_}@example.com',
                     user_img=f'uploads/author.jpg'
                     ) for _ in range(ratio)
