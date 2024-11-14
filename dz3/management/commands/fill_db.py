@@ -6,8 +6,7 @@ import random
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument('ratio', type=int, help='The ratio for filling the database')
-
+        parser.add_argument('ratio', type=int)
     def handle(self, *args, **kwargs):
         ratio = kwargs['ratio']
 
@@ -23,7 +22,7 @@ class Command(BaseCommand):
             Question(
                 question=get_random_string(12),
                 description=get_random_string(50),
-                author=random.choice(users)
+                author=random.choice(Profile.objects.all())
 
             ) for _ in range(ratio * 10)
         ]
@@ -32,8 +31,8 @@ class Command(BaseCommand):
         answers = [
             Answer(
                 text=get_random_string(30),
-                question=random.choice(questions),
-                author=random.choice(users)
+                question=random.choice(Question.objects.all()),
+                author=random.choice(Profile.objects.all())
             ) for _ in range(ratio * 100)
         ]
         Answer.objects.bulk_create(answers)
@@ -45,15 +44,15 @@ class Command(BaseCommand):
 
         qlikes = [
             QuestionLike(
-                user=random.choice(users),
-                question=random.choice(questions)
+                user=random.choice(Profile.objects.all()),
+                question=random.choice(Question.objects.all()),
             ) for _ in range(ratio * 200)
         ]
         QuestionLike.objects.bulk_create(qlikes)
         alikes = [
             AnswerLike(
-                user=random.choice(users),
-                question=random.choice(questions)
+                user=random.choice(Profile.objects.all()),
+                answer=random.choice(Answer.objects.all())
             ) for _ in range(ratio * 200)
         ]
         QuestionLike.objects.bulk_create(alikes)
