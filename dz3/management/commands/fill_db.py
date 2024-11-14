@@ -11,7 +11,10 @@ class Command(BaseCommand):
         ratio = kwargs['ratio']
 
         users = [
-            Profile(username=get_random_string(8), email=f'user{_}@example.com') for _ in range(ratio)
+            Profile(username=get_random_string(8),
+                    email=f'user{_}@example.com',
+                    user_img=f'uploads/author.jpg'
+                    ) for _ in range(ratio)
         ]
         Profile.objects.bulk_create(users)
 
@@ -19,14 +22,15 @@ class Command(BaseCommand):
             Question(
                 question=get_random_string(12),
                 description=get_random_string(50),
-                author=random.choice(users)  #
+                author=random.choice(users)
+
             ) for _ in range(ratio * 10)
         ]
         Question.objects.bulk_create(questions)
 
         answers = [
             Answer(
-                content=get_random_string(30),
+                text=get_random_string(30),
                 question=random.choice(questions),
                 author=random.choice(users)
             ) for _ in range(ratio * 100)
