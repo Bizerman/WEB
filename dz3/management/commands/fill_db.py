@@ -39,10 +39,12 @@ class Command(BaseCommand):
             tag = Tag.objects.create(name=get_random_string(5))
             tags.append(tag)
 
+        likes = []
         for _ in range(ratio * 200):
             like = QuestionLike.objects.create(
                 user=random.choice(users),
                 question=random.choice(questions)
             )
+            likes.append(like)
 
         self.stdout.write(self.style.SUCCESS('Успешно добавленно в БД!'))
