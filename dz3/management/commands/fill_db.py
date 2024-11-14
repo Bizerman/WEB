@@ -45,4 +45,4 @@ class Command(BaseCommand):
                 question=random.choice(questions)
             )
 
-        self.stdout.write(self.style.SUCCESS('Successfully filled the database!'))
+        self.stdout.write(self.style.SUCCESS('Успешно добавленно в БД!'))
