@@ -4,7 +4,7 @@
     {% if tag == None %}
         <header class="d-flex gap-3 align-items-center mb-4">
             <h1>New questions</h1>
-            <a href="#">Hot questions</a>
+            <a href="{% url 'list_hot_questions_page' %}">Hot questions</a>
         </header>
     {% else %}
         <header class="d-flex gap-4 align-items-center mb-4">
@@ -17,12 +17,12 @@
         <div class="row g-0">
         <div class="col-md-2">
             <div class="d-flex flex-column align-items-center mt-2 ms-2">
-                <img src="{{ question.author_img }}" class="img-fluid rounded-start" alt="profile img" style="width: 90px; height: 90px;">
+                <img src="{{ MEDIA_URL }}{{ question.main_attributes.author.user_img.url }}" class="img-fluid rounded-start" alt="profile img" style="width: 90px; height: 90px;">
                 <div class="input-group mb-3  d-flex flex-row gap-2 justify-content-center align-items-center mt-3" >
                     <div>
                         <button type="button" class="btn btn-outline-danger">-</button>
                     </div>
-                    <h5>{{ question.mark }}</h5>
+                    <h5>{{ question.main_attributes.total_marks }}</h5>
                     <div>
                         <button type="button" class="btn btn-outline-success">+</button>
                     </div>
@@ -31,13 +31,13 @@
         </div>
         <div class="col-md-10">
           <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'question_page_url' question.id %}">{{ question.question }}</a></h5>
-                <p class="card-text">{{ question.text }}</p>
+                <h5 class="card-title"><a href="{% url 'question_page_url' question.main_attributes.id %}">{{ question.main_attributes.question }}</a></h5>
+                <p class="card-text">{{ question.main_attributes.text }}</p>
                 <div class="d-flex flex-row gap-5">
-                    <a href="{% url 'question_page_url' question.id %}">answer ({{ question.answers_len }})</a>
+                    <a href="{% url 'question_page_url' question.main_attributes.id %}">answer ({{ question.answers_len }})</a>
                     <div class="d-flex gap-2 mt-1">
                         <p>Tags:</p>
-                        {% for tag in question.tags %}
+                        {% for tag in question.main_attributes.tags.all %}
                             <a href="{% url 'list_tag_url' tag.name %}">{{ tag.name }}</a>
                         {% endfor %}
                     </div>

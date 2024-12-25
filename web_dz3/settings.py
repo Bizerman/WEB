@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'web_dz3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'postgres',
-       'USER': 'postgres',
-       'PASSWORD': 3657635,
-       'HOST': 'localhost',
-       'PORT': 5432,
+        'NAME': 'dz (web)',
+        'USER': 'postgres',
+        'PASSWORD': 3657635,
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 
@@ -125,6 +125,13 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+
+# Путь, по которому будут доступны медиафайлы
+MEDIA_URL = '/uploads/'
+
+# Путь, где файлы будут храниться на сервере
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
