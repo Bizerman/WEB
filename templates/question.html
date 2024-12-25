@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 {% block content %}
     <div class="d-flex flex-column gap-3">
         <div class="card mb-3 border-0">
@@ -69,7 +69,7 @@
                   </div>
                 </div>
             {% endfor %}
-            {% include 'layouts/pagination.html' %}
+            {% include 'components/pagination.html' %}
         </div>
         <textarea type="text" class="form-control" id="formGroupExampleInput2" rows="5" maxlength="512" placeholder="Enter your answer here" ></textarea>
         <div class="d-inline mb-5">

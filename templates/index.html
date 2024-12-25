@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block content %}
     {% if tag == None %}
@@ -47,5 +47,5 @@
       </div>
     </div>
     {% endfor %}
-    {% include 'layouts/pagination.html' %}
+    {% include 'components/pagination.html' %}
 {% endblock %}
