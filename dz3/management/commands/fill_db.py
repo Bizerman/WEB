@@ -71,9 +71,13 @@ class Command(BaseCommand):
                 questions.append(question)
             Question.objects.bulk_create(questions)
             self.stdout.write('Присваиваем тэги...')
+            question_tags = []
+
             for question in questions:
                 random_tags = random.sample(tags, k=min(len(tags), 3))
-                question.tags.set(random_tags)
+                for tag in random_tags:
+                    question_tags.append(Question.tags.through(question_id=question.id, tag_id=tag.id))
+            Question.tags.through.objects.bulk_create(question_tags)
 
             self.stdout.write('Создаю ответы...')
             answers = [

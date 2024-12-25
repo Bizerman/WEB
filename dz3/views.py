@@ -16,7 +16,7 @@ def render_questions_list_page(request,sort = None,tag=None):
     else:
         questions = questions_sort(sort)
     questions_with_answers_len = []
-    top_tags = questions.tags.all()[:8]
+    top_tags = Tag.objects.annotate(question_count=Count('question')).order_by('-question_count')[:8]
     for question in questions:
         answers_count = Answer.objects.filter(question=question).count()  # Подсчитываем количество ответов для каждого вопроса
         questions_with_answers_len.append({
