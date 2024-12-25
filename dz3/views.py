@@ -34,9 +34,10 @@ def render_ask_page(request):
     return render(request, 'ask.html', {'auth': 'Dr.Pepper', 'tags': Tag.objects.all()})
 def render_question_page(request,id):
     question = Question.objects.annotate(total_marks=Sum('questionlike__mark')).get(id=id)
+    top_tags = Tag.objects.annotate(question_count=Count('question')).order_by('-question_count')[:8]
     answers = Answer.objects.annotate(total_marks=Coalesce(Sum('answerlike__mark'), 0)).filter(question=id).order_by('-total_marks')
     page = paginate(answers, request, 30)
-    return render(request, 'question.html',{'auth': 'Dr.Pepper', 'tags': Tag.objects.all(), 'question':question, 'page_obj':page,})
+    return render(request, 'question.html',{'auth': 'Dr.Pepper', 'tags': top_tags, 'question':question, 'page_obj':page,})
 def render_settings_page(request):
     return render(request, 'settings.html', {'auth': 'Dr.Pepper', 'tags': Tag.objects.all()})
 def render_login_page(request):
