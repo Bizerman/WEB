@@ -29,8 +29,8 @@ class Tag(models.Model):
         ('btn-light', 'white'),
         ('btn-dark', 'black'),
     ]
-    name = models.CharField(max_length=16)
-    theme = models.CharField(max_length=16, choices=STATUS_CHOICES)
+    name = models.CharField(max_length=32)
+    theme = models.CharField(max_length=32, choices=STATUS_CHOICES)
 
     def __str__(self):
         return self.name

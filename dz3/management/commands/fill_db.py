@@ -30,13 +30,31 @@ class Command(BaseCommand):
 
             self.stdout.write('Создаю профили...')
             profiles_to_create = [
-                Profile(user=user, email=f'{user.username}@example.com', user_img='author.jpg')
+                Profile(user=user,
+                        email=f'{user.username}@example.com',
+                        user_img=random.choice(['author.jpg','serega2.jpg','serega3.jpg','serega4.jpg','serega5.jpg']))
                 for user in users if not Profile.objects.filter(user=user).exists()
             ]
             Profile.objects.bulk_create(profiles_to_create)
 
             self.stdout.write('Создаю теги...')
-            tags = [Tag(name=get_random_string(5)) for _ in range(ratio)]
+            tags = [
+                Tag(name=random.choice([
+                    "Python", "Django", "Flask", "Machine Learning", "Data Science", "Web Development",
+    "AI", "Deep Learning", "Data Analysis", "Automation",
+    "API", "RESTful", "Tornado", "SQL", "NumPy", "Pandas", "TensorFlow", "Keras",
+    "PyTorch", "Scrapy", "PyGame", "Jupyter", "Selenium", "NLP", "OpenCV", "Data Visualization"
+                ]),
+                    theme=random.choice([
+                        'btn-primary',
+                        'btn-secondary',
+                        'btn-success',
+                        'btn-warning',
+                        'btn-danger',
+                        'btn-info',
+                        'btn-light',
+                        'btn-dark',
+                    ])) for _ in range(ratio)]
             Tag.objects.bulk_create(tags)
             tags = list(Tag.objects.all())
 
@@ -45,19 +63,20 @@ class Command(BaseCommand):
             questions = []
             for _ in range(ratio * 10):
                 question = Question(
-                    question=get_random_string(20),
-                    description=get_random_string(50),
+                    question='How to build moon park?',
+                    description='After reading Hidden Features and Dark Corners of C++/STL on comp.lang.c++.moderated, I was completely surprised that the following snippet compiled and worked in both Visual Studio 2008 and G++ 4.4. I would assume this is also valid C since it works in GCC as well.',
                     author=random.choice(profiles),
                     created_at=timezone.now(),
                 )
-                question.save()  # Сохраняем вопрос перед добавлением тегов
-                question.tags.set(random.sample(tags, k=min(len(tags), 5)))  # Присваиваем случайные теги
+                question.save()
+                random_tags = random.sample(tags, k=min(len(tags), 5))
+                question.tags.set(random_tags)
                 questions.append(question)
 
             self.stdout.write('Создаю ответы...')
             answers = [
                 Answer(
-                    text=get_random_string(30),
+                    text='--> is not an operator. It is in fact two separate operators, -- and >.',
                     question=random.choice(questions),
                     author=random.choice(profiles),
                 ) for _ in range(ratio * 100)
@@ -72,10 +91,9 @@ class Command(BaseCommand):
             )
 
             for _ in range(ratio * 200):
-                profile = random.choice(profiles)  # Случайный профиль
-                question = random.choice(questions)  # Случайный вопрос
+                profile = random.choice(profiles)
+                question = random.choice(questions)
 
-                # Проверяем, существует ли такая комбинация в базе
                 if (profile.id, question.id) not in existing_combinations:
                     q_likes.append(
                         QuestionLike(
@@ -84,7 +102,7 @@ class Command(BaseCommand):
                             question=question,
                         )
                     )
-                    existing_combinations.add((profile.id, question.id))  # Добавляем в набор существующих комбинаций
+                    existing_combinations.add((profile.id, question.id))
             QuestionLike.objects.bulk_create(q_likes)
 
             self.stdout.write('Создаю лайки на ответы...')
@@ -97,7 +115,6 @@ class Command(BaseCommand):
                 profile = random.choice(profiles)
                 answer = random.choice(answers)
 
-                # Проверяем, существует ли такая комбинация в базе
                 if (profile.id, answer.id) not in existing_combinations:
                     a_likes.append(
                         AnswerLike(
@@ -106,7 +123,7 @@ class Command(BaseCommand):
                             answer=answer,
                         )
                     )
-                    existing_combinations.add((profile.id, answer.id))  # Добавляем в набор существующих комбинаций
+                    existing_combinations.add((profile.id, answer.id))
             AnswerLike.objects.bulk_create(a_likes)
             self.stdout.write(self.style.SUCCESS('База данных успешно заполненна!'))
         except Exception as e:
