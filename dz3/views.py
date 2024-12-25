@@ -71,11 +71,11 @@ def render_questions_list_page(request,sort = None,tag=None):
         })
 
     page = paginate(questions_with_answers_len, request, 20)
-    return render(request, 'index.html', {'auth': 'Dr.Pepper', 'tags':Tag.objects.all(),'questions':page.object_list,'tag': tag, 'page_obj':page,})
+    return render(request, 'index.html', {'auth': False, 'tags':Tag.objects.all(),'questions':page.object_list,'tag': tag, 'page_obj':page,})
 def render_hot_questions_page(request):
     return render_questions_list_page(request,'hot')
 def render_questions_with_tag_page(request, tag):
-    return render_questions_list_page(request,'hot',tag)
+    return render_questions_list_page(request,tag=tag)
 def render_ask_page(request):
     return render(request, 'ask.html', {'auth': 'Dr.Pepper', 'tags': Tag.objects.all()})
 def render_question_page(request,id):
@@ -90,14 +90,13 @@ def render_login_page(request):
 def render_signup_page(request):
     return render(request, 'signup.html',{'auth': False, 'tags': Tag.objects.all()})
 def logout(request):
-    return render(request, 'index.html', {'auth': False, 'tags':Tag.objects.all(), 'tag': None,'questions':Question.objects.all(), })
+    return render_questions_list_page(request)
 def paginate(objects_list,request,per_page):
-    try:
-        page_num = int(request.GET.get('page', 1))
-    except ValueError:
-        raise PageNotAnInteger("'page' должен быть целым числом.")
+    page_num = request.GET.get('page', 1)
     paginator = Paginator(objects_list, per_page)
     try:
         return paginator.page(page_num)
     except EmptyPage:
         return paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        raise PageNotAnInteger("'page' должен быть целым числом.")
