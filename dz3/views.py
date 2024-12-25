@@ -51,7 +51,7 @@ tags = [{'name': 'python',
 #          'correct':False,
 #          'mark':0
 #      })
-def render_questions_list_page(request,sort = None):
+def render_questions_list_page(request,sort = None,tag=None):
     if sort == None:
         questions = Question.objects.order_by_answers_count()
     else:
@@ -66,11 +66,11 @@ def render_questions_list_page(request,sort = None):
         })
 
     page = paginate(questions_with_answers_len, request, 20)
-    return render(request, 'index.html', {'auth': 'Dr.Pepper', 'tags':Tag.objects.all(),'questions':page.object_list, 'page_obj':page,})
+    return render(request, 'index.html', {'auth': 'Dr.Pepper', 'tags':Tag.objects.all(),'questions':page.object_list,'tag': tag, 'page_obj':page,})
 def render_hot_questions_page(request):
     return render_questions_list_page(request,'hot')
 def render_questions_with_tag_page(request, tag):
-    return render(request, 'index.html', {'auth': 'Dr.Pepper', 'tags': Tag.objects.all(), 'tag': tag, 'questions':Question.objects.all(), })
+    return render_questions_list_page(request,'hot',tag)
 def render_ask_page(request):
     return render(request, 'ask.html', {'auth': 'Dr.Pepper', 'tags': Tag.objects.all()})
 def render_question_page(request,id):
