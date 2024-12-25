@@ -6,9 +6,9 @@ from django.utils import timezone
 
 class QuestionManager(models.Manager):
     def order_by_date(self):
-        return self.get_queryset().order_by('-created_at')
+        return self.get_queryset().annotate(total_marks=Sum('questionlike__mark')).order_by('-created_at')
 
-    def order_by_answers_count(self):
+    def order_by_mark(self):
         return self.get_queryset().annotate(total_marks=Sum('questionlike__mark')).order_by('-total_marks')
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

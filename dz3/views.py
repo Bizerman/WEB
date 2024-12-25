@@ -51,11 +51,16 @@ tags = [{'name': 'python',
 #          'correct':False,
 #          'mark':0
 #      })
-def render_questions_list_page(request,sort = None,tag=None):
+def questions_sort(sort):
     if sort == None:
-        questions = Question.objects.order_by_answers_count()
+        return Question.objects.order_by_mark()
     else:
-        questions = Question.objects.order_by_date()
+        return Question.objects.order_by_date()
+def render_questions_list_page(request,sort = None,tag=None):
+    if tag != None:
+        questions = questions_sort(sort).filter(tags__name=tag)
+    else:
+        questions = questions_sort(sort)
     questions_with_answers_len = []
 
     for question in questions:
