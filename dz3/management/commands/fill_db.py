@@ -68,10 +68,12 @@ class Command(BaseCommand):
                     author=random.choice(profiles),
                     created_at=timezone.now(),
                 )
-                question.save()
-                random_tags = random.sample(tags, k=min(len(tags), 5))
-                question.tags.set(random_tags)
                 questions.append(question)
+            Question.objects.bulk_create(questions)
+            self.stdout.write('Присваиваем тэги...')
+            for question in questions:
+                random_tags = random.sample(tags, k=min(len(tags), 3))
+                question.tags.set(random_tags)
 
             self.stdout.write('Создаю ответы...')
             answers = [
