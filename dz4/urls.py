@@ -1,5 +1,5 @@
 """
-URL configuration for web_dz3 project.
+URL configuration for web_dz4 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -17,8 +17,8 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from dz3 import views
-from web_dz3 import settings
+from dz4 import views
+from web_dz4 import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),

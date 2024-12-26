@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dz3 import models
+from dz4 import models
 
 admin.site.register(models.Question)
 admin.site.register(models.Answer)

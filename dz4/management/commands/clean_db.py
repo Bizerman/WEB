@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from dz3.models import Profile, Question, Answer, Tag, QuestionLike, AnswerLike
+from dz4.models import Profile, Question, Answer, Tag, QuestionLike, AnswerLike
 from django.contrib.auth.models import User
 
 class Command(BaseCommand):
