@@ -80,8 +80,8 @@ def questions_sort(sort):
         return Question.objects.order_by_date()
 def check_auth(request):
     auth_user = request.user
-    user = Profile.objects.get(user_id=auth_user.id)
     if auth_user.is_authenticated:
+        user = Profile.objects.get(user_id=auth_user.id)
         return user
     else:
         return None
