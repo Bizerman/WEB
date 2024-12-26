@@ -12,8 +12,9 @@ class QuestionManager(models.Manager):
         return self.get_queryset().annotate(total_marks=Sum('questionlike__mark')).order_by('-total_marks')
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=120, null=True, blank=True)
     user_img = models.ImageField(upload_to='uploads', null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
+
 
     def __str__(self):
         return self.user.username

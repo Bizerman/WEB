@@ -4,7 +4,7 @@ from django.db.models import Sum, Count
 from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 
-from dz4.models import Question, Tag, Answer
+from dz4.models import Question, Tag, Answer, Profile
 
 top_tags = Tag.objects.annotate(question_count=Count('question')).order_by('-question_count')[:8]
 
@@ -79,8 +79,9 @@ def questions_sort(sort):
     else:
         return Question.objects.order_by_date()
 def check_auth(request):
-    user = request.user
-    if user.is_authenticated:
+    auth_user = request.user
+    user = Profile.objects.get(user_id=auth_user.id)
+    if auth_user.is_authenticated:
         return user
     else:
         return None

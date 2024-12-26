@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
     <header>
-        <h1>Settings: {{ auth }}</h1>
+        <h1>Settings: {{ auth.username }}</h1>
     </header>
     <form>
         <div class="row mt-5">
@@ -12,10 +12,10 @@
                 <label for="UploadAvatar" class="form-label">Upload avatar</label>
             </div>
             <div class="d-flex flex-column col gap-2" >
-                <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputLogin">
-                <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputEmail">
-                <input type="email" class="form-control" value="{{ auth }}"  maxlength="32" style="width: 50%" id="InputNickName">
-                <img src="" class="img-fluid rounded-start" alt="profile img" style="width:150px; height: 150px;">
+                <input type="login" class="form-control" value="{{ auth.user.username }}" maxlength="64" style="width: 50%" id="InputLogin">
+                <input type="email" class="form-control" value="{{ auth.user.email }}"  maxlength="64" style="width: 50%" id="InputEmail">
+                <input type="nickname" class="form-control" value="{{ auth.nickname }}"  maxlength="32" style="width: 50%" id="InputNickName">
+                <img src="{{ MEDIA_URL }}{{ auth.user_img.url }}" class="img-fluid rounded-start" alt="profile img" style="width:150px; height: 150px;">
                 <input class="form-control" type="file" style="width: 50%" id="formFile">
                 <div class="d-flex flex-column gap-4 mt-4">
                     <button type="submit" class="btn btn-dark" style="width: 15%">Registered!</button>

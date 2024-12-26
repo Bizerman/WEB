@@ -33,7 +33,7 @@ class Command(BaseCommand):
             self.stdout.write('Создаю профили...')
             profiles_to_create = [
                 Profile(user=user,
-                        email=f'{user.username}@example.com',
+                        nickname="Молодец_5",
                         user_img=random.choice(['author.jpg','serega2.jpg','serega3.jpg','serega4.jpg','serega5.jpg']))
                 for user in users if not Profile.objects.filter(user=user).exists()
             ]
