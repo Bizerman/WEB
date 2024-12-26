@@ -100,8 +100,10 @@ class SignupForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         repeat_password = cleaned_data.get('repeat_password')
+        user_img = cleaned_data.get('user_img')
 
         if password != repeat_password:
             raise forms.ValidationError("Passwords do not match")
-
+        if not user_img:
+            raise forms.ValidationError("Please upload an image.")
         return cleaned_data

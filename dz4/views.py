@@ -62,29 +62,22 @@ def render_signup_page(request):
     if request.method == "POST":
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
-            # Сохраняем пользователя
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Хешируем пароль
+            user.set_password(form.cleaned_data['password'])
             user.save()
-
-            # Создаем профиль
             profile = Profile.objects.create(
                 user=user,
                 nickname=form.cleaned_data.get('nickname'),
                 user_img=form.cleaned_data.get('user_img')
             )
-
-            # Логиним пользователя после регистрации
             login(request, user)
 
-            return render_questions_list_page(request)  # Перенаправляем на главную страницу
+            return render_questions_list_page(request)
         else:
-            # Если форма невалидна, просто возвращаем шаблон с ошибками
             return render(request, 'signup.html', {'form': form,'tags': top_tags})
     else:
-        form = SignupForm()  # Инициализируем форму для GET запроса
+        form = SignupForm()
 
-    # Возвращаем страницу с пустой или предварительно заполненной формой
     return render(request, 'signup.html', {'form': form, 'tags': top_tags})
 def logout_user(request):
     logout(request)
