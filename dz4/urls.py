@@ -29,6 +29,6 @@ urlpatterns = [
     path('settings',views.render_settings_page, name='settings_page_url'),
     path('question/<int:id>', views.render_question_page, name='question_page_url'),
     path('login/',views.render_login_page,name='login_page_url'),
-    path('logout/',views.logout,name='logout_url'),
+    path('logout/',views.logout_user,name='logout_url'),
     path('signup/',views.render_signup_page,name='signup_page_url'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

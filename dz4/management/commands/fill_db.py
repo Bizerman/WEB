@@ -21,10 +21,12 @@ class Command(BaseCommand):
             users = [
                 User(
                     username=f'user_{i}_{get_random_string(5)}',
-                    email=f'user_{i}@example.com'
+                    email=f'user_{i}@example.com',
                 )
                 for i in range(ratio)
             ]
+            for user in users:
+                user.set_password('12345')
             User.objects.bulk_create(users)
             users = User.objects.all()
 
