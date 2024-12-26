@@ -2,10 +2,13 @@
 {% block content %}
     <div class="d-flex flex-column gap-3">
         <header>
-            <h1 >Registration</h1>
+            <h1>Registration</h1>
         </header>
-        <p style="color: #bd0000">Sorry, this email address is already registered!</p>
-        <form>
+        {% if form.errors %}
+            <p style="color: #bd0000">Sorry, this email address is already registered!</p>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="row">
                 <div class="d-flex flex-column col-2 gap-3">
                     <label for="InputLogin" class="form-label">Login</label>
@@ -15,13 +18,13 @@
                     <label for="InputRepeatPassword" class="form-label">Repeat password</label>
                     <label for="UploadAvatar" class="form-label">Upload avatar</label>
                 </div>
-                <div class="d-flex flex-column col gap-2" >
-                    <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputLogin">
-                    <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputEmail">
-                    <input type="email" class="form-control" maxlength="32" style="width: 50%" id="InputNickName">
-                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputPassword">
-                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputRepeatPassword">
-                    <input class="form-control" type="file" style="width: 50%" id="formFile">
+                <div class="d-flex flex-column col gap-2">
+                    <input type="text" class="form-control" maxlength="64" style="width: 50%" id="InputLogin" name="username" value="{{ form.username.value|default:'' }}">
+                    <input type="email" class="form-control" maxlength="64" style="width: 50%" id="InputEmail" name="email" value="{{ form.email.value|default:'' }}">
+                    <input type="text" class="form-control" maxlength="32" style="width: 50%" id="InputNickName" name="nickname" value="{{ form.nickname.value|default:'' }}">
+                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputPassword" name="password">
+                    <input type="password" class="form-control" maxlength="32" style="width: 50%" id="InputRepeatPassword" name="repeat_password">
+                    <input class="form-control" type="file" style="width: 50%" id="formFile" name="user_img">
                     <div class="d-flex flex-column gap-4 mt-4">
                         <button type="submit" class="btn btn-dark" style="width: 15%">Registered!</button>
                     </div>

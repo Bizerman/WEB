@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django import forms
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
 from django.utils import timezone
@@ -84,3 +86,22 @@ class AnswerLike(models.Model):
 
     class Meta:
         unique_together = [('profile', 'answer')]
+
+class SignupForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, max_length=32, label="Password")
+    repeat_password = forms.CharField(widget=forms.PasswordInput, max_length=32, label="Repeat password")
+    user_img = forms.ImageField(required=False, label="Upload avatar")
+    nickname = forms.CharField(max_length=32, required=True, label="Nickname")
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        repeat_password = cleaned_data.get('repeat_password')
+
+        if password != repeat_password:
+            raise forms.ValidationError("Passwords do not match")
+
+        return cleaned_data

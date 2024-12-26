@@ -4,7 +4,7 @@ from django.db.models import Sum, Count
 from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 
-from dz4.models import Question, Tag, Answer, Profile
+from dz4.models import Question, Tag, Answer, Profile, SignupForm
 
 top_tags = Tag.objects.annotate(question_count=Count('question')).order_by('-question_count')[:8]
 
@@ -59,8 +59,33 @@ def render_login_page(request):
 
     return render(request, 'login.html', {'error_message': error_message})
 def render_signup_page(request):
-    auth_user = check_auth(request)
-    return render(request, 'signup.html',{'auth': auth_user, 'tags': top_tags})
+    if request.method == "POST":
+        form = SignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Сохраняем пользователя
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  # Хешируем пароль
+            user.save()
+
+            # Создаем профиль
+            profile = Profile.objects.create(
+                user=user,
+                nickname=form.cleaned_data.get('nickname'),
+                user_img=form.cleaned_data.get('user_img')
+            )
+
+            # Логиним пользователя после регистрации
+            login(request, user)
+
+            return render_questions_list_page(request)  # Перенаправляем на главную страницу
+        else:
+            # Если форма невалидна, просто возвращаем шаблон с ошибками
+            return render(request, 'signup.html', {'form': form,'tags': top_tags})
+    else:
+        form = SignupForm()  # Инициализируем форму для GET запроса
+
+    # Возвращаем страницу с пустой или предварительно заполненной формой
+    return render(request, 'signup.html', {'form': form, 'tags': top_tags})
 def logout_user(request):
     logout(request)
     return render_questions_list_page(request)
